@@ -121,6 +121,11 @@ dpkg -L libpthread-stubs0-dev
 ```
 
 g++ -o log4cpp_main src/log4cpp_main.cpp -llog4cpp -lpthread
+g++ -o log4cpp_main src/log4cpp_main.cpp -llog4cpp -pthread -I/usr/local/include -L/usr/local/lib -llog4cpp
+可以
+
+/usr/bin/c++ -g CMakeFiles/log4cpp_main.dir/src/log4cpp_main.cpp.o -o log4cpp_main  -lpthread -llog4cpp
+不可以
 
 
 ./log4cpp_main
@@ -143,3 +148,12 @@ libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007fdf62e49000)
 libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fdf62c57000)
 libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007fdf62c32000)
 /lib64/ld-linux-x86-64.so.2 (0x00007fdf63246000)
+
+
+pkg-config --cflags --libs log4cpp
+-pthread -I/usr/local/include -L/usr/local/lib -llog4cpp
+
+
+结论
+如果您正在编写新的代码，并且可以考虑使用C++，那么您可能会发现C++标准库中的字符串处理功能更加强大和灵活，比如 std::istringstream 和 std::getline 可以用来分割字符串，而无需担心线程安全问题。
+在Ubuntu系统上，您应该使用 strtok_r 而不是 strtok_s，因为glibc没有提供 strtok_s 的实现。如果您需要线程安全的字符串分割功能，strtok_r 是一个很好的选择。
