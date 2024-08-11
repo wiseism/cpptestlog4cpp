@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.12)
+project(cpptestlog4cpp VERSION 1.0.0)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+# 或者，如果你需要为特定的编译器设置特定的标志
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
+
+set(CMAKE_VERBOSE_MAKEFILE ON)
+add_executable(cpptestlog4cpp src/main.cpp)
+add_executable(macapi src/macapi.cpp)
+add_executable(mac_s src/mac_s.c)
+add_executable(a src/a.cpp)
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    find_package(log4cxx REQUIRED)
+    target_link_libraries(cpptestlog4cpp liblog4cpp.so)
+elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    find_package(log4cxx REQUIRED)
+    target_link_libraries(cpptestlog4cpp log4cxx)
+elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    #        brew install log4cpp && brew link log4cpp
+    include_directories(/usr/local/include)
+    link_directories(/usr/local/lib)
+    link_directories(/usr/local/Cellar/log4cpp/1.1.3/lib)
+    message(STATUS "Added link directory: /usr/local/Cellar/log4cpp/1.1.3/lib")
+
+    #        find_package(log4cxx REQUIRED)
+    target_link_libraries(cpptestlog4cpp log4cpp)
+else()
+    message(FATAL_ERROR "Unsupported operating system")
+endif()
