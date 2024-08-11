@@ -26,8 +26,8 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
     #        brew install log4cpp && brew link log4cpp
     include_directories(/usr/local/include)
     link_directories(/usr/local/lib)
-    link_directories(/usr/local/Cellar/log4cpp/1.1.3/lib)
-    message(STATUS "Added link directory: /usr/local/Cellar/log4cpp/1.1.3/lib")
+#    link_directories(/usr/local/Cellar/log4cpp/1.1.3/lib)
+#    message(STATUS "Added link directory: /usr/local/Cellar/log4cpp/1.1.3/lib")
 
     #        find_package(log4cxx REQUIRED)
     target_link_libraries(cpptestlog4cpp log4cpp)
