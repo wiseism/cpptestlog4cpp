@@ -24,10 +24,20 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
     target_link_libraries(cpptestlog4cpp log4cxx)
 elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
     #        brew install log4cpp && brew link log4cpp
-    include_directories(/usr/local/Cellar/log4cpp/1.1.3/include)
-    link_directories(/usr/local/Cellar/log4cpp/1.1.3/lib)
-    message(STATUS "Added include directory: /usr/local/Cellar/log4cpp/1.1.3/include")
-    message(STATUS "Added link directory: /usr/local/Cellar/log4cpp/1.1.3/lib")
+    # 版本号目录会随 Homebrew 更新变化, 且 ARM runner 前缀为 /opt/homebrew, 动态获取
+    execute_process(
+        COMMAND brew --prefix log4cpp
+        OUTPUT_VARIABLE LOG4CPP_PREFIX
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        RESULT_VARIABLE LOG4CPP_BREW_RES
+    )
+    if(NOT LOG4CPP_BREW_RES EQUAL 0 OR NOT LOG4CPP_PREFIX)
+        set(LOG4CPP_PREFIX /usr/local/opt/log4cpp)
+    endif()
+    include_directories(${LOG4CPP_PREFIX}/include)
+    link_directories(${LOG4CPP_PREFIX}/lib)
+    message(STATUS "Added include directory: ${LOG4CPP_PREFIX}/include")
+    message(STATUS "Added link directory: ${LOG4CPP_PREFIX}/lib")
 
     #        find_package(log4cxx REQUIRED)
     target_link_libraries(log4cpp_main pthread log4cpp)
