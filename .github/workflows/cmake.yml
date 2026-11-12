@@ -24,8 +24,8 @@ jobs:
 
     - name: apt log4cpp
       run:  |
-        sudo apt update
-        sudo apt install liblog4cpp5-dev
+        for i in 1 2 3; do sudo apt update && break || sleep 15; done
+        for i in 1 2 3; do sudo apt install liblog4cpp5-dev && break || sleep 20; done
         dpkg -L liblog4cpp5-dev
         pkg-config --cflags --libs log4cpp
 

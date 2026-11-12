@@ -18,3 +18,6 @@
 |---|---|
 | 42442953785 (修复前) | failure — library not found |
 | 待 re-run | 待填 |
+
+## 补记: ubuntu apt DNS 抖动
+- apt update/install 加 3 次重试（runner DNS 瞬时故障导致连续 3 次失败，macos 已 ✅）。
