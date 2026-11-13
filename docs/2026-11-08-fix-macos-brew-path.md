@@ -26,4 +26,4 @@ src/log4cpp_main.cpp:1:10: fatal error: 'log4cpp/Category.hh' file not found
 ## 验证
 | run id | 结果 |
 | --- | --- |
-| 本次推送触发 | 待填 |
+| 43224149684 (ubuntu) / 43224149667 (macos) | ✅ success |
